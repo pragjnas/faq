@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
+        <div class="row justify-content-lg-start">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Questions
                         <a class="btn btn-primary float-right" href="{{ route('question.create') }}">
@@ -44,6 +44,7 @@
                             </div>
 
                         </div>
+
                         <div class="card-footer">
                             <div class="float-right">
                                 {{ $questions->links() }}
