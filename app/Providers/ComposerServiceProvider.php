@@ -13,14 +13,7 @@ class ComposerServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        view()->composer('latest',function($view)
-        {
-            $view-> with ('latestQuestions',DB::table('questions')
-                ->orderBy('created_at', 'desc')
-                ->take(7)
-                ->get());
-        });
+    {        view()->composer('*', 'App\Http\ViewComposers\QuestionsComposer');
     }
 
     /**

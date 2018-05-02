@@ -1,59 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container-fluid">
         <div class="row justify-content-lg-start">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">My Questions
-                        <a class="btn btn-primary float-right" href="{{ route('question.create') }}">
-                            Create a Question
-                        </a>
-
+                    <div class="card-header">All Questions
                         <div class="card-body">
-
                             <div class="card-deck">
-                                @forelse($questions as $question)
+                                @foreach($allQuestions as $questions)
                                     <div class="col-sm-6 d-flex align-items-stretch">
                                         <div class="card mb-3 ">
                                             <div class="card-header">
                                                 <small class="text-muted">
-                                                    Updated: {{ $question->created_at->diffForHumans() }}
-                                                    Answers: {{ $question->answers()->count() }}
+                                                    Created: {{ $questions->created_at}}
 
                                                 </small>
                                             </div>
                                             <div class="card-body">
-                                                <p class="card-text">{{$question->body}}</p>
+                                                <p class="card-text">{{$questions->body}}</p>
                                             </div>
                                             <div class="card-footer">
                                                 <p class="card-text">
 
-                                                    <a class="btn btn-primary float-right" href="{{ route('question.show', ['id' => $question->id]) }}">
-                                                        View
+                                                    <a class="btn btn-primary float-right" href="{{ route('question.show', ['id' => $questions->id]) }}">Answer Question </a>
+
                                                     </a>
                                                 </p>
                                             </div>
                                         </div>
+
+
+
                                     </div>
-                                @empty
-                                    There are no questions to view, you can  create a question.
-                                @endforelse
-
-
+                                @endforeach
                             </div>
 
                         </div>
 
-                        <div class="card-footer">
-                            <div class="float-left">
-                                {{ $questions->links() }}
-                            </div>
-                        </div>
 
                     </div>
+
+                    <div class="card-footer">
+                        <div class="float-left">
+                            {{ $allQuestions->links() }}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+
 @endsection

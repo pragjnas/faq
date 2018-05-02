@@ -30,6 +30,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $questions = $user->questions()->paginate(4);
        // $latestQuestions = DB::table('questions')
+       // $latestQuestions = DB::table('questions')
           //  ->orderBy('created_at', 'desc')
            // ->take(5)
         //    ->get();
