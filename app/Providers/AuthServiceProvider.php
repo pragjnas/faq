@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('editAnswers-auth', function ($user, $answer)
         {
-            $answer = Answer::find($answer);
+            //$answer = Answer::find($answer);
             return (Auth::user()-> id == $answer -> user_id);
         });
     }

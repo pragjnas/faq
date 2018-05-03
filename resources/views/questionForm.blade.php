@@ -8,9 +8,9 @@
                     <div class="card-header">Create Question</div>
                     <div class="card-body">
                         @if($edit === FALSE)
-                            {!! Form::model($question, ['route' => ['question.store'], 'method' => 'post']) !!}
+                            {!! Form::model($question, ['route' => ['questions.store'], 'method' => 'post']) !!}
                         @else()
-                            {!! Form::model($question, ['route' => ['question.update', $question->id], 'method' => 'patch']) !!}
+                            {!! Form::model($question, ['route' => ['questions.update', $question->id], 'method' => 'patch']) !!}
                         @endif
                         <div class="form-group">
                             {!! Form::label('body', 'Body') !!}

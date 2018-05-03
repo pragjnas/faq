@@ -10,7 +10,7 @@
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a
-                                href="{{ route('question.show', ['id' => $question->id]) }}">{{$question->body}}</a>
+                                href="{{ route('questions.show', ['id' => $question->id]) }}">{{$question->body}}</a>
                     </li>
 
 

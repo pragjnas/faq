@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Question;
 use App\Answer;
+use Illuminate\Support\Facades\Gate;
 
 class AnswerController extends Controller
 {
@@ -57,7 +58,7 @@ class AnswerController extends Controller
         $Answer->user()->associate(Auth::user());
         $Answer->question()->associate($question);
         $Answer->save();
-        return redirect()->route('question.show',['question_id' => $question->id])->with('message', 'Saved');
+        return redirect()->route('questions.show',['question_id' => $question->id])->with('message', 'Saved');
     }
 
 
@@ -79,13 +80,20 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($question, $answer)
+    public function edit($question, $answer_id)
     {
-        $answer = Answer::find($answer);
-        $edit = TRUE;
-        return view('answerForm', ['answer' => $answer, 'edit' => $edit, 'question'=>$question ]);
+        $answer = Answer::find($answer_id);
+        //echo $answer;
+        if (Gate::allows('editAnswers-auth', $answer)) {
+                $edit = true;
+                return view('answerForm', ['answer' => $answer, 'edit' => $edit, 'question' => $question]);
+        } else {
+               // echo($answer -> user_id);
+              //  echo(Auth::user() -> id);
+            //    echo var_dump(Auth::user()-> id == $answer -> user_id);
+                echo 'You are not allowed to do this operation';
+            }
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -105,7 +113,7 @@ class AnswerController extends Controller
         $answer = Answer::find($answer);
         $answer->body = $request->body;
         $answer->save();
-        return redirect()->route('answer.show',['question_id' => $question, 'answer_id' => $answer])->with('message', 'Updated');
+        return redirect()->route('answers.show',['question_id' => $question, 'answer_id' => $answer])->with('message', 'Updated');
     }
     /**
      * Remove the specified resource from storage.
@@ -117,7 +125,7 @@ class AnswerController extends Controller
     {
         $answer = Answer::find($answer);
         $answer->delete();
-        return redirect()->route('question.show',['question_id' => $question])->with('message', 'Delete');
+        return redirect()->route('questions.show',['question_id' => $question])->with('message', 'Delete');
     }
 
 
