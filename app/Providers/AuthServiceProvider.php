@@ -2,8 +2,13 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\GatesController;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\User;
+use App\Question;
+use App\Answer;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +30,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('editDeleteQuestions-auth', function ($user, $question)
+        {
+            return (Auth::user()-> id == $question -> user_id);
+        });
+
+
     }
+
 }
