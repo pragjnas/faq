@@ -90,7 +90,7 @@ class QuestionController extends Controller
 
         if (Gate::denies('editDeleteQuestions-auth', $question)) ;
         {
-            return redirect()->route('home')->with('message', 'Operation failed');
+            return redirect()->route('home')->with('message', 'Access Denied');
 
         }
     }
@@ -131,7 +131,7 @@ class QuestionController extends Controller
         }
         if (Gate::denies('editDeleteQuestions-auth', $question)) ;
         {
-            return redirect()->route('home')->with('message', 'Operation failed');
+            return redirect()->route('home')->with('message', 'Access Denied');
 
         }
 

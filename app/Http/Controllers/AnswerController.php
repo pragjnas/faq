@@ -90,7 +90,7 @@ class AnswerController extends Controller
         }
         if (Gate::denies('editDeleteAnswers-auth', $answer)) ;
         {
-            return redirect()->route('home')->with('message', 'Operation failed');
+            return redirect()->route('home')->with('message', 'Access Denied');
 
         }
     }
@@ -133,7 +133,7 @@ class AnswerController extends Controller
 
         if (Gate::denies('editDeleteAnswers-auth', $answer)) ;
         {
-            return redirect()->route('home')->with('message', 'Operation failed');
+            return redirect()->route('home')->with('message', 'Access Denied');
 
         }
     }
