@@ -37,14 +37,14 @@ class QuestionController extends Controller
     {
 
         $question = new Question();
-        $edit= FALSE;
-        return view('questionForm',['question' => $question,'edit' => $edit]);
+        $edit = FALSE;
+        return view('questionForm', ['question' => $question, 'edit' => $edit]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -65,7 +65,7 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Question $question)
@@ -74,27 +74,32 @@ class QuestionController extends Controller
         return view('question')->with('question', $question);
 
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Question $question)
     {
-        if (Gate::allows('editDeleteQuestions-auth', $question))
-        {
+        if (Gate::allows('editDeleteQuestions-auth', $question)) {
             $edit = TRUE;
             return view('questionForm', ['question' => $question, 'edit' => $edit]);
         }
-        else echo 'You are not allowed to edit others questions';
+
+        if (Gate::denies('editDeleteQuestions-auth', $question)) ;
+        {
+            return redirect()->route('home')->with('message', 'Operation failed');
+
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Question $question)
@@ -108,26 +113,27 @@ class QuestionController extends Controller
 
         $question->body = $request->body;
         $question->save();
-        return redirect()->route('questions.show',['question_id' => $question->id])->with('message', 'Saved');
+        return redirect()->route('questions.show', ['question_id' => $question->id])->with('message', 'Saved');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Question $question, Request $request)
     {
-        if (Gate::allows('editDeleteQuestions-auth', $question))
-        {
+        if (Gate::allows('editDeleteQuestions-auth', $question)) {
             $question->delete();
             return redirect()->route('home')->with('message', 'Deleted');
 
         }
-        else echo 'You are not allowed to delete others questions';
+        if (Gate::denies('editDeleteQuestions-auth', $question)) ;
+        {
+            return redirect()->route('home')->with('message', 'Operation failed');
 
-
+        }
 
 
         //test
