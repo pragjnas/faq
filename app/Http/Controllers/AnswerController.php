@@ -35,13 +35,13 @@ class AnswerController extends Controller
     {
         $answer = new Answer();
         $edit = FALSE;
-        return view('answerForm',['answer' => $answer,'edit' => $edit, 'question' => $question]);
+        return view('answerForm', ['answer' => $answer, 'edit' => $edit, 'question' => $question]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $question)
@@ -58,17 +58,17 @@ class AnswerController extends Controller
         $Answer->user()->associate(Auth::user());
         $Answer->question()->associate($question);
         $Answer->save();
-        return redirect()->route('questions.show',['question_id' => $question->id])->with('message', 'Saved');
+        return redirect()->route('questions.show', ['question_id' => $question->id])->with('message', 'Saved');
     }
 
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($question,$answer)
+    public function show($question, $answer)
     {
         $answer = Answer::find($answer);
         return view('answer')->with(['answer' => $answer, 'question' => $question]);
@@ -77,28 +77,29 @@ class AnswerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($question, $answer_id)
     {
         $answer = Answer::find($answer_id);
         //echo $answer;
-        if (Gate::allows('editAnswers-auth', $answer)) {
-                $edit = true;
-                return view('answerForm', ['answer' => $answer, 'edit' => $edit, 'question' => $question]);
+        if (Gate::allows('editDeleteAnswers-auth', $answer)) {
+            $edit = true;
+            return view('answerForm', ['answer' => $answer, 'edit' => $edit, 'question' => $question]);
         } else {
-               // echo($answer -> user_id);
-              //  echo(Auth::user() -> id);
+            // echo($answer -> user_id);
+            //  echo(Auth::user() -> id);
             //    echo var_dump(Auth::user()-> id == $answer -> user_id);
-                echo 'You are not allowed to do this operation';
-            }
+            echo 'You are not allowed to do this operation';
+        }
     }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $question, $answer)
@@ -113,20 +114,27 @@ class AnswerController extends Controller
         $answer = Answer::find($answer);
         $answer->body = $request->body;
         $answer->save();
-        return redirect()->route('answers.show',['question_id' => $question, 'answer_id' => $answer])->with('message', 'Updated');
+        return redirect()->route('answers.show', ['question_id' => $question, 'answer_id' => $answer])->with('message', 'Updated');
     }
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($question, $answer)
+    public function destroy($question, $answer_id)
     {
-        $answer = Answer::find($answer);
-        $answer-> delete();
-        return redirect()->route('questions.show',['question_id' => $question])->with('message', 'Delete');
+        $answer = Answer::find($answer_id);
+        if (Gate::allows('editDeleteAnswers-auth', $answer)) {
+            $answer->delete();
+            return redirect()->route('questions.show', ['question_id' => $question])->with('message', 'Delete');
+
+        } else echo 'You are not allowed to delete others questions';
+
     }
 
-
 }
+
+
+
