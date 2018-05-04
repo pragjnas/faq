@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $questions = $user->questions()->paginate(4);
+        $questions = $user->questions()->paginate(6);
        // $latestQuestions = DB::table('questions')
        // $latestQuestions = DB::table('questions')
           //  ->orderBy('created_at', 'desc')
