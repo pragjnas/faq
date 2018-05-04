@@ -1,26 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row ">
+    <div class="container float-left">
+        <div class="row justify-content-lg-start">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Question</div>
 
                     <div class="card-body">
-
                         {{$question->body}}
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-primary float-right"
-                           href="{{ route('questions.edit',['id'=> $question->id])}}">
-                            Edit Question
-                        </a>
+                        @if (Auth::user()-> id == $question -> user_id)
 
-                        {{ Form::open(['method'  => 'DELETE', 'route' => ['questions.destroy', $question->id]])}}
-                        <button class="btn btn-danger float-right mr-2" value="submit" type="submit" id="submit">Delete
-                        </button>
-                        {!! Form::close() !!}
+                            <a class="btn btn-primary float-right"
+                               href="{{ route('questions.edit',['id'=> $question->id])}}">
+                                Edit Question
+                            </a>
+
+
+                            {{ Form::open(['method'  => 'DELETE','onsubmit'=> "return confirm('Do you really want to delete?');",'route' => ['questions.destroy', $question->id]])}}
+                            <button class="btn btn-danger float-right mr-2" value="submit" type="submit" id="submit">Delete
+                            </button>
+
+                            {!! Form::close() !!}
+                        @endif
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -56,4 +64,6 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 @endsection

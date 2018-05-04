@@ -124,7 +124,7 @@ class AnswerController extends Controller
     public function destroy($question, $answer)
     {
         $answer = Answer::find($answer);
-        $answer->delete();
+        $answer-> delete();
         return redirect()->route('questions.show',['question_id' => $question])->with('message', 'Delete');
     }
 

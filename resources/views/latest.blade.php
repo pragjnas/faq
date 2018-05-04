@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row justify-content-lg-end">
-        <div class="col-md-12">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
                     Recently added Questions
