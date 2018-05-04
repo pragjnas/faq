@@ -32,13 +32,13 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('editDeleteQuestions-auth', function ($user, $question)
         {
-            return (Auth::user()-> id == $question -> user_id);
+            return (Auth::user()->id == $question->user_id);
         });
 
         Gate::define('editDeleteAnswers-auth', function ($user, $answer)
         {
             //$answer = Answer::find($answer);
-            return (Auth::user()-> id == $answer -> user_id);
+            return (Auth::user()->id == $answer->user_id);
         });
     }
 
