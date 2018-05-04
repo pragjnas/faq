@@ -87,11 +87,11 @@ class AnswerController extends Controller
         if (Gate::allows('editDeleteAnswers-auth', $answer)) {
             $edit = true;
             return view('answerForm', ['answer' => $answer, 'edit' => $edit, 'question' => $question]);
-        } else {
-            // echo($answer -> user_id);
-            //  echo(Auth::user() -> id);
-            //    echo var_dump(Auth::user()-> id == $answer -> user_id);
-            echo 'You are not allowed to do this operation';
+        }
+        if (Gate::denies('editDeleteAnswers-auth', $answer)) ;
+        {
+            return redirect()->route('home')->with('message', 'Operation failed');
+
         }
     }
 
@@ -129,9 +129,13 @@ class AnswerController extends Controller
         if (Gate::allows('editDeleteAnswers-auth', $answer)) {
             $answer->delete();
             return redirect()->route('questions.show', ['question_id' => $question])->with('message', 'Delete');
+        }
 
-        } else echo 'You are not allowed to delete others questions';
+        if (Gate::denies('editDeleteAnswers-auth', $answer)) ;
+        {
+            return redirect()->route('home')->with('message', 'Operation failed');
 
+        }
     }
 
 }
