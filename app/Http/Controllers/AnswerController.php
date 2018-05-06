@@ -88,7 +88,7 @@ class AnswerController extends Controller
             $edit = true;
             return view('answerForm', ['answer' => $answer, 'edit' => $edit, 'question' => $question]);
         }
-        if (Gate::denies('editDeleteAnswers-auth', $answer)) ;
+       else (Gate::denies('editDeleteAnswers-auth', $answer)) ;
         {
             return redirect()->route('home')->with('message', 'Access Denied');
 
@@ -131,7 +131,7 @@ class AnswerController extends Controller
             return redirect()->route('questions.show', ['question_id' => $question])->with('message', 'Delete');
         }
 
-        if (Gate::denies('editDeleteAnswers-auth', $answer)) ;
+        else (Gate::denies('editDeleteAnswers-auth', $answer)) ;
         {
             return redirect()->route('home')->with('message', 'Access Denied');
 
