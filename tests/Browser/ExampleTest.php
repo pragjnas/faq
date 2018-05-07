@@ -15,17 +15,18 @@ class ExampleTest extends DuskTestCase
      *
      * @return void
      */
+
     public function testBasicExample()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('http://localhost:8000')
+            $browser->visit('/')
                    ->assertSee('Laravel');
         });
     }
-    public function testBasicExample2()
+    public function testLogin()
     {
         $user = factory(User::class)->create([
-            'email' => 'ps231@gmail.com',
+            'email' => 'ps221231@gmail.com',
         ]);
 
         $this->browse(function ($browser) use ($user) {
@@ -33,6 +34,22 @@ class ExampleTest extends DuskTestCase
                 ->type('email', $user->email)
                 ->type('password', 'secret')
                 ->press('Login')
+                ->assertPathIs('/home');
+        });
+    }
+
+    public function testRegister()
+    {
+        $user = factory(User::class)->create([
+            'email' => 'ps944343531@gmail.com',
+        ]);
+
+        $this->browse(function ($browser) use ($user) {
+            $browser->visit('/register')
+                ->type('email', $user->email)
+                ->type('password', 'secret')
+                ->type('password_confirmation', 'secret')
+                ->press('Register')
                 ->assertPathIs('/home');
         });
     }
