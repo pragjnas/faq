@@ -15,6 +15,7 @@ class AllQuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index(Question $question)
     {
         $allQuestions = DB::table('questions')
