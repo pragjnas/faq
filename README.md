@@ -25,7 +25,10 @@ User story 1.5: As a user, I should be able to click the ‘Answer’ button for
 
 Epic 2: Implement a feature to the application which allows authorized users to edit/delete questions/answers.
 
-User story 2.1: As a user, I want to edit/delete only those questions which are directly mapped to the user, so that unauthorized users will not be given edit/delete permissions.
+User story 2.1: As a user, I want to edit only those questions which are directly mapped to the user, so that unauthorized users will not be given edit permissions.
 
-User story 2.2: As a user, I want to edit/delete only those answers which are directly mapped to the user, so that unauthorized users will not be given edit/delete permissions.
+User story 2.2: As a user, I want to delete only those questions which are directly mapped to the user, so that unauthorized users will not be given delete permissions.
 
+User story 2.3: As a user, I want to edit only those answers which are directly mapped to the user, so that unauthorized users will not be given edit permissions.
+
+User story 2.2: As a user, I want to delete only those answers which are directly mapped to the user, so that unauthorized users will not be given delete permissions.
